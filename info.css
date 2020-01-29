@@ -34,6 +34,10 @@ padding-top: 50px;
     margin-left: -100px;
 }
 
+#passcode{
+    text-align: center;
+}
+
 #submit-button{
     visibility: hidden;
 }
