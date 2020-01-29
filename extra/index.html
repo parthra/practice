@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" class="crypt-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="master.css">
+    <title>invitation</title>
+</head>
+<body class="crypt">
+    <div id="inputfield">
+        <form name="login">
+            <input type="password" name="pswrd" id="passcode" autofocus/>
+            <input type="submit" class="submit-button">
+        </form>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js" integrity="sha384-lp4k1VRKPU9eBnPePjnJ9M2RF3i7PC30gXs70+elCVfgwLwx1tv5+ctxdtwxqZa7" crossorigin="anonymous"></script>
+    <script language="javascript" name="decrypt">
+        var keySize = 256;
+       var iterations = 1000;
+       function decrypt (encryptedMsg, pass) {
+           var salt = CryptoJS.enc.Hex.parse(encryptedMsg.substr(0, 32));
+           var iv = CryptoJS.enc.Hex.parse(encryptedMsg.substr(32, 32))
+           var encrypted = encryptedMsg.substring(64);
+   
+           var key = CryptoJS.PBKDF2(pass, salt, {
+               keySize: keySize/32,
+               iterations: iterations
+           });
+   
+           var decrypted = CryptoJS.AES.decrypt(encrypted, key, {
+               iv: iv,
+               padding: CryptoJS.pad.Pkcs7,
+               mode: CryptoJS.mode.CBC
+           }).toString(CryptoJS.enc.Utf8);
+           return decrypted;
+       }
+   
+       document.getElementById('inputfield').addEventListener('submit', function(e) {
+           e.preventDefault();
+   
+           var passphrase = document.getElementById('passcode').value,
+               encryptedMsg = '24d78f3d0913efd0e29e72ee97d408ada93cc1a41cebc8b50e795e2977d83e29caa28bd89fcfec77c1fe17d4398209a2ac572e2e57a364cda8850c709a37b68fDx9MApZa+OEF+89pavF99PF1z+BmV34o7cDEAMJQjXpwgLXrc886kGAH1DDsfQgaVbtpILG67OvQy/AHpJWJ/chGRSxdUhA3lvxGUdB/UCFspp/7T72INr5YSgCmHt8P/EJRNvKyZVsG+ZoRbxnGVw==',
+               encryptedHMAC = encryptedMsg.substring(0, 64),
+               encryptedHTML = encryptedMsg.substring(64),
+               decryptedHMAC = CryptoJS.HmacSHA256(encryptedHTML, CryptoJS.SHA256(passphrase).toString()).toString();
+   
+           if (decryptedHMAC !== encryptedHMAC) {
+               alert('skidaddle');
+               return;
+           }
+   
+           var plainHTML = decrypt(encryptedHTML, passphrase);
+   
+           document.write(plainHTML);
+           document.close();
+       });
+   </script>
+   <iframe width="560" height="315" src="https://www.youtube.com/embed/8UHWMcv5nF8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</body>
+</html>

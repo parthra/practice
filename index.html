@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" class="crypt-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="info.css">
+    <title>invitation</title>
+</head>
+<body class="crypt">
+    <div id="inputfield">
+        <form name="login">
+            <input type="password" name="pswrd" id="passcode" autofocus/>
+            <input type="submit" id="submit-button">
+        </form>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js" integrity="sha384-lp4k1VRKPU9eBnPePjnJ9M2RF3i7PC30gXs70+elCVfgwLwx1tv5+ctxdtwxqZa7" crossorigin="anonymous"></script>
+    <script language="javascript" name="decrypt">
+        var keySize = 256;
+       var iterations = 1000;
+       function decrypt (encryptedMsg, pass) {
+           var salt = CryptoJS.enc.Hex.parse(encryptedMsg.substr(0, 32));
+           var iv = CryptoJS.enc.Hex.parse(encryptedMsg.substr(32, 32))
+           var encrypted = encryptedMsg.substring(64);
+   
+           var key = CryptoJS.PBKDF2(pass, salt, {
+               keySize: keySize/32,
+               iterations: iterations
+           });
+   
+           var decrypted = CryptoJS.AES.decrypt(encrypted, key, {
+               iv: iv,
+               padding: CryptoJS.pad.Pkcs7,
+               mode: CryptoJS.mode.CBC
+           }).toString(CryptoJS.enc.Utf8);
+           return decrypted;
+       }
+   
+       document.getElementById('inputfield').addEventListener('submit', function(e) {
+           e.preventDefault();
+   
+           var passphrase = document.getElementById('passcode').value,
+               encryptedMsg = '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',
+               encryptedHMAC = encryptedMsg.substring(0, 64),
+               encryptedHTML = encryptedMsg.substring(64),
+               decryptedHMAC = CryptoJS.HmacSHA256(encryptedHTML, CryptoJS.SHA256(passphrase).toString()).toString();
+   
+           if (decryptedHMAC !== encryptedHMAC) {
+               alert('skidaddle');
+               return;
+           }
+   
+           var plainHTML = decrypt(encryptedHTML, passphrase);
+   
+           document.write(plainHTML);
+           document.close();
+       });
+   </script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+@font-face {
+  font-family: 'varsity';
+  src: url("font/varsity.ttf");
+}
+@font-face {
+  font-family: 'fire';
+  src: url("font/fire2.ttf");
+}
+
+#frontpage-bg{
+  background-color: black;
+  background-image: url(backgroundimage.JPG);
+      background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#showinfo {
+  width: 100%;
+  padding: 50px 0;
+  text-align: center;
+  background-color: lightblue;
+  margin-top: 20px;
+}
+
+h1{
+  color: goldenrod;
+  outline-color: red;
+  font-size: 100px;
+  font-family: 'varsity';
+  text-shadow:
+  4px 4px 0 darkred,
+  4px -4px 0 darkred,
+  -4px -4px 0 darkred,
+  -4px 4px 0 darkred;
+  letter-spacing: 9px;
+  text-align: center;
+}
+
+#passwordbox{
+  margin: auto;
+  width: 15em;
+  text-align: center;
+  background-color: pink;
+  font-family: 'fire';
+}
+
+#inputfield {
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -100px;
+}
+
+#fire {
+  width: 50px;
+  height: 50px;
+}
+
+.crypt{
+  background-color: lightcoral;
+}
+
+.title {
+  color: white;
+  font-size: 100px;
+  font-family: 'varsity';
+  text-shadow:
+  4px 4px 0 darkred,
+  4px -4px 0 darkred,
+  -4px -4px 0 darkred,
+  -4px 4px 0 darkred;
+  letter-spacing: 9px;
+  text-align: center;
+}
+
+.submit-button{
+  visibility: hidden;
+}
+
+#passcode{
+  text-align: center;
+}
